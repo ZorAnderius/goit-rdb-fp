@@ -1,0 +1,61 @@
+1. Create table 'Countries' and fill in data from 'entry_table'
+
+use pandemic;
+
+CREATE TABLE IF NOT EXISTS countries (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    country_name VARCHAR(60),
+    country_code VARCHAR(15)
+);
+
+INSERT INTO countries (country_name, country_code) 
+SELECT DISTINCT Entity, Code
+FROM entry_table;
+
+
+2. Create table 'Infectious_cases' and fill in data from 'entry_table'
+
+use pandemic;
+
+CREATE TABLE IF NOT EXISTS infectious_cases (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    country_id INT,
+    Year INT,
+    Number_yaws TEXT,
+    polio_cases TEXT,
+    cases_guinea_worm TEXT,
+    Number_rabies TEXT,
+    Number_malaria TEXT,
+    Number_hiv TEXT,
+    Number_tuberculosis TEXT,
+    Number_smallpox TEXT,
+    Number_cholera_cases TEXT,
+    FOREIGN KEY (country_id) REFERENCES countries(id)
+);
+
+INSERT INTO infectious_cases (
+    country_id, 
+	Year,
+    Number_yaws,
+    polio_cases,
+    cases_guinea_worm,
+    Number_rabies,
+    Number_malaria,
+    Number_hiv,
+    Number_tuberculosis,
+    Number_smallpox,
+    Number_cholera_cases
+) 
+SELECT c.id,
+	   e.Year,
+	   e.Number_yaws,
+       e.polio_cases,
+       e.cases_guinea_worm,
+       e.Number_rabies,
+       e.Number_malaria,
+       e.Number_hiv,
+       e.Number_tuberculosis,
+       e.Number_smallpox,
+       e.Number_cholera_cases
+FROM entry_table AS e
+JOIN countries AS c ON e.entity=c.country_name AND e.code=c.country_code;

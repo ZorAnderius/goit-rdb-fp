@@ -1,0 +1,7 @@
+use pandemic;
+
+SELECT  Year,
+		MAKEDATE(Year,1) as table_date,
+        CURDATE() as `current_date`,
+        DATEDIFF(CURDATE(), MAKEDATE(Year,1) ) as days_diff
+FROM infectious_cases;

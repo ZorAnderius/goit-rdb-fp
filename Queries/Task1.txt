@@ -1,0 +1,7 @@
+1.Create the pandemic schema in the database using the SQL command.
+    
+    CREATE SCHEMA pandemic;
+
+2.Select it as the default schema using the SQL command.
+
+    use pandemic;

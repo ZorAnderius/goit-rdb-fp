@@ -1,0 +1,19 @@
+use pandemic;
+
+DELIMITER //
+
+CREATE FUNCTION CalculateDiff(year INT)
+RETURNS INT
+DETERMINISTIC
+NO SQL
+BEGIN
+	RETURN IF(year IS NOT NULL AND year > 0, DATEDIFF(CURDATE(), MAKEDATE(year, 1)), 0); 
+END //
+
+DELIMITER ;
+
+SELECT  Year,
+		MAKEDATE(Year,1) as table_date,
+        CURDATE() as `current_date`,
+		CalculateDiff(Year) as days_diff
+FROM infectious_cases;
